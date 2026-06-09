@@ -1797,6 +1797,8 @@
             authServer: 'https://azure-dev.ship2myid.com/auth-server',
         };
 
+        let _accessToken = null;
+
         // ══════════════════════════════════════════════════════════════
         //  INDEX DB HELPERS
         // ══════════════════════════════════════════════════════════════
@@ -2060,6 +2062,7 @@
                 });
                 const tokens = await tokenRes.json();
                 if (!tokenRes.ok) throw new Error('Token exchange failed: ' + (tokens.error_description || tokens.error || JSON.stringify(tokens)));
+                _accessToken = tokens.access_token;
 
                 window.history.replaceState({}, '', window.location.pathname);
                 restoreCart();
@@ -2287,7 +2290,7 @@
                 <div class="pd-value">${esc(r.value)}</div>
             </div>
         </div>`).join('') + '<hr class="pd-divider">' +
-                `<div class="pd-row" style="cursor:pointer; color:#ff4444;" onclick="window.location='fastrack.html'">
+                `<div class="pd-row" style="cursor:pointer; color:#ff4444;" onclick="signOut()">
             <span class="pd-icon">🚪</span>
             <div><div class="pd-value">Sign out</div></div>
          </div>`;
@@ -2306,6 +2309,24 @@
             document.getElementById('loading').style.display = 'none';
             document.getElementById('error-msg').textContent = msg;
             document.getElementById('error-view').style.display = 'block';
+        }
+
+        // ── Sign out — revoke token then redirect ────────────────────
+        async function signOut() {
+            if (_accessToken) {
+                try {
+                    await fetch(`${CONFIG.authServer}/oauth/revoke`, {
+                        method:  'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body:    new URLSearchParams({
+                            token:         _accessToken,
+                            client_id:     CONFIG.clientId,
+                            client_secret: CONFIG.clientSecret,
+                        }),
+                    });
+                } catch (_) { /* ignore revoke errors — always sign out locally */ }
+            }
+            window.location = 'fastrack.html';
         }
 
         function showToast(msg) {
