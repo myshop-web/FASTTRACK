@@ -1655,7 +1655,7 @@
     <!-- ── Header ── -->
     <header>
         <div class="header-inner" id="header-inner">
-            <a href="/FASTTRACK" class="logo">
+            <a href="/Fastrack" class="logo">
                 <span class="logo-main">Fastrack</span>
                 <span class="logo-tag">Bold Watches · Bold You</span>
             </a>
@@ -1673,7 +1673,7 @@
                 <button class="header-btn btn-signin" onclick="openModal('signin')">Sign In</button>
                 <button class="header-btn btn-signup" onclick="openModal('signup')">Sign Up</button>
             </div>
-            <a href="/FASTTRACK" class="back-link" id="back-link" style="display:none">← Back to Store</a>
+            <a href="/Fastrack" class="back-link" id="back-link" style="display:none">← Back to Store</a>
 
             <div id="user-chip">
                 <button class="chip-toggle" onclick="toggleDropdown()" id="chip-toggle-btn">
@@ -1874,7 +1874,7 @@
             <div style="font-size:40px;margin-bottom:12px;">⚠️</div>
             <h2>Something went wrong</h2>
             <p id="error-msg">An unexpected error occurred. Please try again.</p>
-            <a href="/FASTTRACK" class="btn-back">← Back to Store</a>
+            <a href="/Fastrack" class="btn-back">← Back to Store</a>
         </div>
     </div>
 
@@ -2024,8 +2024,8 @@
         //  CONFIG
         // ══════════════════════════════════════════════════════════════
         const CONFIG = {
-            clientId: 'post_c372252c82db46f0',
-            clientSecret: 'f00a36f897f44e5d99c9aa802e50272f5d15a81ed19b4123', // Replace with your Fastrack client secret
+            clientId: 'post_ff303718b2e6432e',
+            clientSecret: '03041dc006564755a6e26ea2d0e5837811f5e8f7d974447b', // Replace with your Fastrack client secret
             redirectUri: window.location.href.split('?')[0].split('#')[0],
             scopes: 'openid profile phone address',
             authServer: 'https://azure-dev.ship2myid.com/auth-server',
@@ -2157,7 +2157,7 @@
         _authChannel.onmessage = e => {
             if (e.data === 'signout') {
                 sessionStorage.clear();
-                window.location = '/FASTTRACK';
+                window.location = '/Fastrack';
             }
         };
 
